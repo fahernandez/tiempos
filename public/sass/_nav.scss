@@ -1,0 +1,20 @@
+// Override boostrap default margin bottom
+.navbar {
+	margin-bottom: 0px;
+
+	// Get styles to the icons
+	i[class*='-icon'] {
+		margin-right: 5px;
+		font-size: 18px;
+	}
+
+	// Get all the navigation menu options of the same size
+	.nav.navbar-nav {
+		@media (min-width: $screen-sm-min) {
+	    	height: $navbar-height;
+		}
+		@media (min-width: $screen-md-min) {
+			height: $navbar-height;
+		}
+	}
+}

@@ -1,15 +1,17 @@
 <div class="container">
-	<form class="form-signin">
-		<h2 class="form-signin-heading">Por favor autentíquese en la aplicación</h2>
+	<form class="form-signin" method="post" action="/login">
+		<h2 class="form-signin-heading">Autenticación</h2>
 		<label for="inputEmail" class="sr-only">Correo electrónico</label>
-		<input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required="" autofocus="">
+		<input name="username" type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required="" autofocus="">
 		<label for="inputPassword" class="sr-only">Contraseña</label>
-		<input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
-		<div class="checkbox">
-	  		<label>
-	    		<input type="checkbox" value="remember-me"> Remember me
-	  		</label>
-		</div>
+		<input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		{{#if errorMessage}}
+			<div class="alert alert-danger" role="alert">
+			  <i class="icon-sad" aria-hidden="true"></i>
+			  <span class="sr-only">Error:</span>
+			  {{errorMessage}}
+			</div>
+		{{/if}}
 	</form>
 </div>

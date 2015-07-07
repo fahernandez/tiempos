@@ -1,0 +1,18 @@
+
+
+// Format footer section
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: $footer-height;
+	display: block;
+	background-color: $base-backgroud-gray;
+	border-color: $base-border-gray;
+
+	.text-muted {
+		height: 100%;
+		text-align: center;
+		line-height: $footer-height;
+	}
+}

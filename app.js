@@ -12,6 +12,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var exphbs  = require('express-handlebars');
+var User = require('./model/user.js');
+var passport = require('passport');
+var bcrypt = require('bcrypt-nodejs');
+var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -40,21 +44,49 @@ app.use(session({
     secret: 's?g2$sK!n6#G.uv',
     proxy: true,
     resave: true,
-    saveUninitialized: true}));
+    saveUninitialized: true
+}));
+
+// passport initilization
+passport.use(new LocalStrategy(function(username, password, done) {
+    new User({email: username}).fetch().then(function(data) {
+        var user = data;
+        if(user === null) {
+            console.log('Invalid username')
+            return done(null, false, {message: 'Contraseña o usuario inválido'});
+        } else {
+            user = data.toJSON();
+            if(!bcrypt.compareSync(password, user.password)) {
+                console.log('Invalid password');
+                return done(null, false, {message: 'Contraseña o usuario inválido'});
+            } else {
+                return done(null, user);
+            }
+        }
+    });
+}));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.email);
+});
+
+passport.deserializeUser(function(username, done) {
+    new User({email: username}).fetch().then(function(user) {
+       done(null, user);
+    });
+});
 
 // initializing password manager
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/users', users);
 app.use('/login', login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    res.render('404');
 });
 
 // error handlers

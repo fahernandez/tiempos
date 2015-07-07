@@ -1,13 +1,24 @@
 /*global define*/
 define([
 	'jquery',
-	'backbone'
-], function ($, Backbone, SearchView) {
+	'backbone',
+	'views/user/main'
+], function ($,
+			Backbone, 
+			UserListView
+) {
 	'use strict';
 
-	var SearchRouter = Backbone.Router.extend({
-		routes: {}
+	var mainRoutes = Backbone.Router.extend({
+		routes: {
+			"users" : "getUserList",
+		},
+
+		getUserList: function (param) {
+			console.log('Loading users main view...');
+			new UserListView();
+		}
 	});
 
-	return SearchRouter;
+	return mainRoutes;
 });
